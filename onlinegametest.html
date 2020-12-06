@@ -14,9 +14,9 @@
     </head>
     <body>
         <div id="player"></div>
+        <div id="otherPlayer"></div>
         <script>
             document.addEventListener("keydown", (event) => {
-                console.log(event.key)
                 if(event.key == "ArrowLeft")
                         {
                             var move = parseInt($("#player").css("left"));
@@ -55,41 +55,49 @@
                         }
                      
             })
-            function renderPlayer(id,name,left,top){
-                let p = document.createElement("div")
-                p.style.position = "absolute"
-                p.style.width = "50px"
-                p.style.height = "50px"
-                p.className = "OtherPlayer"
-                p.id = name
+
+            var name = "tiss"
+
+            setInterval(function(){
+                
+                fetchOtherPlayersAndRender()
+                updatePlayerPosition(name)
+                            
+            }, 300)
+
+            function moveOtherPlayer(name,left,top){
+                let p = document.getElementById("otherPlayer")
                 p.style.left = left+"px"
                 p.style.top = top+"px"
-                p.style.backgroundColor = "red"
-                document.body.appendChild(p)
                 console.log("Rendered player...")
             }
+            
             function fetchOtherPlayersAndRender() {
                 $.ajax(
                         {
                         type: "POST",
                         url: "https://furymusic.000webhostapp.com/scripts/ogt.php",
                         dataType: "json",
+                        data: {Name:name},
                         cache: false,
                         success: function (data) {
-                            console.log(data[3])
-                            renderPlayer(data[0], data[1], data[2], data[3])
-
+                            console.log(data)
+                            
+                            moveOtherPlayer(data[1], data[2], data[3])
+                                    
+                                    
                         },
                         error: function (er) {
                             console.log(er)
                         }
                     })
-
-                    let op = document.querySelector(".OtherPlayer")
-                    op.parentNode.removeChild(op)
+                    
+                        
+                  
+                    
             }
-            function updatePlayerPosition() {
-                var name = "Balleblekk"
+            function updatePlayerPosition(name) {
+                
                 var leftpos = parseInt(document.getElementById("player").style.left)
                 var toppos = parseInt(document.getElementById("player").style.top)
                 $.ajax(
@@ -107,13 +115,10 @@
                                 console.log(er)
                                 }
                             })
-            }
-            setInterval(function(){
-                
-                fetchOtherPlayersAndRender()
-                updatePlayerPosition()
                             
-            }, 500)
+            }
+
+            
             
         </script>
     </body>
@@ -130,6 +135,12 @@
             width: 50px;
             height: 50px;
             background-color: green; 
+            position: absolute;
+        }
+        #otherPlayer {
+            width: 50px;
+            height: 50px;
+            background-color: red; 
             position: absolute;
         }
     </style>
