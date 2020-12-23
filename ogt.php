@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "id15398232_ogt";
-$password = "Konbra7250**";
+$password = "pass";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password,"id15398232_onlinegametest");
