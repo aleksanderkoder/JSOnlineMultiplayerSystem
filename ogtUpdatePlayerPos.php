@@ -2,7 +2,7 @@
 
 $servername = "localhost";
 $username = "id15398232_ogt";
-$password = "Konbra7250**";
+$password = "pass";
 $leftpos = $_POST["LeftPos"];
 $toppos = $_POST["TopPos"];
 $name = $_POST["Name"];
